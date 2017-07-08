@@ -9,11 +9,15 @@ def closest_power(base, num):
     In case of a tie, return the smaller value.
     Returns the exponent.
     '''
-    e = int(log(num,base))
-    min_e = {}
-    for i in (e-1,e, e+1):
-        min_e[i] = (abs(base**i - num), base**i - num)
-    return min(min_e, key=min_e.get)
+    e1 = int(log(num,base))
+    e2 = e1 + 1
+    return e1 if abs(base**e1 - num) <= abs(base**e2 - num) else e2
 
+#   Solution version #1:
+#   e = int(log(num,base))
+#   min_e = {}
+#   for i in (e-1,e, e+1):
+#       min_e[i] = (abs(base**i - num), base**i - num)
+#   return min(min_e, key=min_e.get)
 closest_power(82, 1)
 #print(closest_power(20, 210.0))
