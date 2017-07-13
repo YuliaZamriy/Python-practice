@@ -24,19 +24,23 @@ def genPrimes():
 
         x += 1
 
-        """ With each run through the while initialize a list to hold remainder from each division"""
-        control = []
+        """ Initiate control flag with True """
+        is_Prime = True
 
-        """ Divide current x by each element of the prime list and store the remainder in the control list """
-        for i in p:
-            control.append(x%i)
-        
-        """ If control list doesn't contain any zeroes
-            (x divides by all previously generated prime numbers with non-zero remainder)
-            x is a prime number. Yield this new prime number with call to next()
+        """ If the number doesn't pass prime number check, 
+            set control flag to False and break the loop 
         """
-        if min(control) > 0:
+        for i in p:
+            if x%i == 0:
+                is_Prime = False
+                break
+        
+        """ If the number retained control flag at True, it's real prime
+            Append it to the list of primes, and yield it
+        """
+        if is_Prime:
             p.append(x)
             yield x
+
 
 primes = genPrimes()
