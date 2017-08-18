@@ -113,12 +113,8 @@ class Message(object):
         # in lower and upper case
         # values = letters shifted by "shift" to the right
         for i in range(num_letters):
-            if i < num_letters - shift:
-                self.dict52[alphabet[i]] = alphabet[i+shift]
-                self.dict52[alphabet[i].upper()] = alphabet[i+shift].upper()
-            else:
-                self.dict52[alphabet[i]] = alphabet[abs(num_letters - i - shift)]
-                self.dict52[alphabet[i].upper()] = alphabet[abs(num_letters - i - shift)].upper()
+            self.dict52[alphabet[i]] = alphabet[(i+shift) % num_letters]
+            self.dict52[alphabet[i].upper()] = alphabet[(i+shift) % num_letters].upper()
         return self.dict52
 
     def apply_shift(self, shift):
@@ -256,7 +252,6 @@ class CiphertextMessage(Message):
             # decrypt the message and count number of valid words
             decrypted_message = Message.apply_shift(self, 26 - s)
             for word in decrypted_message.split(' '):
-#            for word in Message.apply_shift(self, 26 - s).split(' '):
                 if is_word(self.valid_words, word):
                     count += 1
 
@@ -266,7 +261,6 @@ class CiphertextMessage(Message):
                 valid = count
                 self.best_shift = 26 - s
                 self.decrypted_message = decrypted_message
-#        return (self.best_shift, Message.apply_shift(self, self.best_shift)
         return (self.best_shift, self.decrypted_message)
 
 #Example test case (PlaintextMessage)
