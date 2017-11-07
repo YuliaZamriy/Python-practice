@@ -9,7 +9,11 @@ Context: exercises for MIT6.00.2x
 Goal: generate power sets
 """
 
-# this function was provided as an example
+# The below function was provided as an example:
+# Suppose we have a generator that returns every combination of objects in one bag. 
+# We can represent this as a list of 1s and 0s denoting 
+# whether each item is in the bag or not.
+
 def powerSet(items):
     N = len(items)
     # enumerate the 2**N possible combinations
@@ -21,7 +25,7 @@ def powerSet(items):
                 combo.append(items[j])
         yield combo
 
-# this function was written by me for the following assignment
+# The below function was written by me for the following assignment:
 # Write a generator that returns every arrangement of items such that each is 
 # in one or none of two different bags. Each combination should be given 
 # as a tuple of two lists, the first being the items in bag1, 
