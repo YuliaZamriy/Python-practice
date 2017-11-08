@@ -25,6 +25,25 @@ def powerSet(items):
                 combo.append(items[j])
         yield combo
 
+import itertools 
+
+# generate all combinations of N items in the list
+def powerSetIT(items):
+    ''' Requires itertools package.
+        Goal: generate a power set containing all possible sets of the input list
+        Input: list of items
+        Output: yields one set at a time
+        Details: uses itertools.combinations() method to go through all combinations of items of all possible lengths (between 0 and the length of the input list)
+    '''
+    # iterates through all possible lengths of sets
+    for listlen in range(len(items) + 1):
+        # generates tuples with all possible combinations of list items 
+        # within specified length ('listlen')
+        for oneset in itertools.combinations(items, listlen):
+            # returns a tuple
+            yield oneset
+            
+
 # The below function was written by me for the following assignment:
 # Write a generator that returns every arrangement of items such that each is 
 # in one or none of two different bags. Each combination should be given 
@@ -50,8 +69,28 @@ def yieldAllCombos(items):
                 bag2.append(items[j])
         yield (bag1, bag2)
 
-items =  ['a','b']
+def yieldAllCombosNBags(items, bags):
+    N = len(items)
+    complexity = bags + 1
+    for i in range(complexity**N):
+        allbags = []
+        for b in range(bags):
+            b = []
+            allbags.append(b)
+        print('allbags', allbags)
+        for j in range(N):
+            bag_num = (i // (complexity**j)) % complexity
+            if bag_num == 0:
+                break
+            for b in allbags:
+                print('bag n:', bag_num, 'bag index:', allbags.index(b))
+                if bag_num == allbags.index(b) + 1:
+                    b.append(items[j])
+                    break
+        yield allbags
+
+items =  ['a','b','c']
 onebag = powerSet(items)
 twobags = yieldAllCombos(items)
-
-#next(x)    
+nbags = yieldAllCombosNBags(items, 3)
+#next(nbags)    
