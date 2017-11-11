@@ -70,27 +70,25 @@ def yieldAllCombos(items):
         yield (bag1, bag2)
 
 def yieldAllCombosNBags(items, bags):
+    """
+      Generates all combinations of N items into a number of bags, 
+      whereby each item is in one or zero bags.
+
+      Yields a list of bags, where each bag is represented as 
+      a list of which item(s) are in each bag.
+    """
     N = len(items)
-    complexity = bags + 1
-    for i in range(complexity**N):
-        allbags = []
-        for b in range(bags):
-            b = []
-            allbags.append(b)
-        print('allbags', allbags)
+    nsets = bags + 1
+    for i in range(nsets**N):
+        allbags = [[] for k in range(bags)]
         for j in range(N):
-            bag_num = (i // (complexity**j)) % complexity
-            if bag_num == 0:
-                break
-            for b in allbags:
-                print('bag n:', bag_num, 'bag index:', allbags.index(b))
-                if bag_num == allbags.index(b) + 1:
-                    b.append(items[j])
-                    break
+            bag_num = (i // (nsets**j)) % nsets
+            if bag_num > 0:
+                allbags[bag_num - 1].append(items[j])
         yield allbags
 
-items =  ['a','b','c']
+items =  ['a','b']
 onebag = powerSet(items)
 twobags = yieldAllCombos(items)
-nbags = yieldAllCombosNBags(items, 3)
+nbags = yieldAllCombosNBags(items, 2)
 #next(nbags)    
